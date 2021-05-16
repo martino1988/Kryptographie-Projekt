@@ -8,6 +8,7 @@ namespace md5
         {
             try
             {
+                Console.WriteLine("\n ++++ MENÜ ++++");
                 int zähler = 1;
                 foreach (string a in list)
                 {
