@@ -239,11 +239,10 @@ namespace md5
             double e = Convert.ToDouble(_e);
             double N = Convert.ToDouble(_N);
             double basis = InAsciiUmwandeln(message);
-            Console.WriteLine("Berechne " + basis + "^" + e + " mod " + N);
+            Console.WriteLine("Sectret: " + basis + "^" + e + " mod " + N);
             double faktor1 = Math.Pow(basis, e);
-            Console.WriteLine("Berechne " + faktor1 + " mod " + N);
-            double secret = faktor1 % N;
-            Console.WriteLine("Verschlüsselter Text (secret): " + secret);
+            double secret = (faktor1 % N);
+            Console.WriteLine("Sectret berechnet: " + secret);
         }
 
 
@@ -252,11 +251,10 @@ namespace md5
             double e = Convert.ToDouble(_d);
             double N = Convert.ToDouble(_N);
             double basis = Convert.ToDouble(_sec);
-            Console.WriteLine("Berechne " + basis + "^" + e + " mod " + N);
+            Console.WriteLine("Klartext: " + basis + "^" + e + " mod " + N);
             double faktor1 = Math.Pow(basis, e);
-            Console.WriteLine("Berechne " + faktor1 + " mod " + N);
             double secret = faktor1 % N;
-            Console.WriteLine("Klartext: " + secret);
+            Console.WriteLine("Klartext berechnet: " + secret);
             }
         }
     }
