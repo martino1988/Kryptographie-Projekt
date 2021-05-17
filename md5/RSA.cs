@@ -182,12 +182,14 @@ namespace md5
             }
             internal static int[] Get2Primes(int n)
             {
-                int prim1 = 19;
-                int prim2 = 17;
+                int prim1 = 7;
+                int prim2 = 23;
 
                 //TODO Code 2 Primzahlen
-                prim1 = Prime(n);
-                prim2 = Prime(prim1 + 1);
+                //prim1 = Prime(n);
+                //prim2 = Prime(prim1 + 1);
+                
+            
 
                 int[] primArr = new int[2];
                 primArr[0] = prim1;
@@ -244,16 +246,69 @@ namespace md5
                 //Console.WriteLine("Ascii als double: "+asciistring);
                 return Convert.ToDouble(asciistring);
             }
+            
 
         public static void Encrypt(string message, string _e, string _N)
         {
+            string chars = message;
+            char[] letters = chars.ToCharArray();
+            //Console.WriteLine("Array: " + chars[0] + " " + chars[1]);
+            string[] plaintextArray = new string[letters.Length];
+            string[] ciphertextArray = new string[letters.Length];
+            int z = 0;
+
+            // TEST
+                int e = Convert.ToInt32(_e);
+                var ee = BigInteger.Parse(_e);
+                double N = Convert.ToDouble(_N);
+                var NN = BigInteger.Parse(_N);
+            //TEST
+
+            foreach (char item in letters)
+            {
+                double x = InAsciiUmwandeln(item.ToString());
+                string y = x.ToString();
+                plaintextArray[z] = y;
+                var bi = BigInteger.Parse(y);
+                var result = BigInteger.ModPow(bi, e, NN);
+                ciphertextArray[z] = result.ToString();
+                
+                //Console.WriteLine("PlaintextArray Stelle " + z + ": " + plaintextArray[z]);
+                z++;
+            }
+            Console.WriteLine("Geheimtext: ");
+            foreach(string item in ciphertextArray)
+            {
+                Console.Write(item + " ");
+            }
+            //Console.WriteLine("Ciphertext Array: " + ciphertextArray[0] + " " + ciphertextArray[1] + " " + ciphertextArray[2]);
+            
+
+
+            /*
+            double[] cipherNumbersArray = new double[cipherArray.Length];
+            int counterNumber = 0;
+            foreach (string item in cipherArray)
+            {
+                cipherNumbersArray[counterNumber] = Convert.ToDouble(item);
+                Console.WriteLine(cipherNumbersArray[counterNumber]);
+                counterNumber++;
+            }
+
             string mess = InAsciiUmwandeln(message).ToString();
             Console.WriteLine("Klartext: " + mess);
+            */
+
+
+            /*
             var msg = BigInteger.Parse(mess);
+            Console.WriteLine(msg);
             var NN = BigInteger.Parse(_N);
             int eee = Convert.ToInt32(_e);
             var erg2 = BigInteger.ModPow(msg, eee, NN);
             Console.WriteLine("Geheimtext: " + erg2);
+            */
+
 
 
             //double e = Convert.ToDouble(_e);
@@ -270,13 +325,50 @@ namespace md5
         public static void Decrypt(string _sec, string _d, string _N)
            {
             //string mess = InAsciiUmwandeln(_sec).ToString();
-            var secr = BigInteger.Parse(_sec);
+
+            var NN = BigInteger.Parse(_N);
+            int dd = Convert.ToInt32(_d);
+
+            string[] cipherTextArray = _sec.Split(" ");
+            string[] plainTextArray = new string[cipherTextArray.Length];
+            string[] plainText = new string[cipherTextArray.Length];
+            int z = 0;
+
+            foreach (string item in cipherTextArray)
+            {
+                var secr = BigInteger.Parse(item);
+                var result = BigInteger.ModPow(secr, dd, NN);
+                plainTextArray[z] = result.ToString();
+
+                //Console.WriteLine("PlaintextArray Stelle " + z + ": " + plaintextArray[z]);
+                z++;
+            }
+            z = 0;
+            Console.WriteLine("Klartext (ASCII): ");
+            foreach (string item in plainTextArray)
+            {
+                Console.Write(item + " ");
+                int unicode = Convert.ToInt32(item);
+                char character = (char)unicode;
+                string text = character.ToString();
+                plainText[z] = text;
+                z++;
+
+            }
+            Console.WriteLine("\nKlartext: ");
+            foreach (string item in plainText)
+            {
+                Console.Write(item);
+            }
+
+            /*var secr = BigInteger.Parse(_sec);
             var NN = BigInteger.Parse(_N);
             int dd = Convert.ToInt32(_d);
             Console.WriteLine("{0} ^ {1} % {2}", secr, dd, NN);
             var erg2 = BigInteger.ModPow(secr, dd, NN);
-            Console.WriteLine("Klartext: " + erg2);
 
+            Console.WriteLine("Klartext: " + erg2);
+            */
 
 
             //double e = Convert.ToDouble(_d);
@@ -286,7 +378,7 @@ namespace md5
             //double faktor1 = Math.Pow(basis, e);
             //double secret = faktor1 % N;
             //Console.WriteLine("Klartext berechnet: " + secret);
-            }
+        }
         }
     }
 
