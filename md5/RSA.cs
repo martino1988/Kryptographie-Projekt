@@ -15,22 +15,22 @@ namespace md5
             //2 Primzahlen ermitteln
             int[] primeArray = new int[2];
             primeArray = Get2Primes(n);
-            //foreach (var a in primeArray)
-            //{
-            //    Console.WriteLine("Primzahl: " + a);
-            //}
+            foreach (var a in primeArray)
+            {
+                Console.WriteLine("Primzahl: " + a);
+            }
 
             //N berechnen = p x q
             int N = NBerechnen(primeArray[0], primeArray[1]);
-            //Console.WriteLine("N: " + N);
+            Console.WriteLine("N: " + N);
 
             //Phi berechnen
             int phiN = PhiVonN(primeArray[0], primeArray[1]);
-            //Console.WriteLine("Phi(n): " + phiN);
+            Console.WriteLine("Phi(n): " + phiN);
 
             //b berechnen ggt(b, phi(n))
             int zz = BerechneZufallszahl(phiN);
-            //Console.WriteLine("Teilerfremde Zufallszahl: " + zz);
+            Console.WriteLine("Teilerfremde Zufallszahl: " + zz);
 
             //inverses b^-1 berechnen
             int[] erg = ErweiterterEuklid(phiN, zz);
@@ -39,8 +39,11 @@ namespace md5
             //{
             //    Console.WriteLine(i + " " + erg[i]);
             //}
-            int e = zz;
-            int d = Modulo(erg[2], phiN);
+            Console.WriteLine("Inverses=" + erg[2]);
+            int d = zz;
+            int e = Modulo(erg[2], phiN);
+
+            //Console.WriteLine("d=" + d + " e=" + e);
 
             Console.WriteLine("\n\n+++++ Public Key +++++");
             Console.ForegroundColor = ConsoleColor.Green;
@@ -52,7 +55,6 @@ namespace md5
             Console.WriteLine("d: {0}\nN: {1}", d, N);
             Console.ResetColor();
             Console.WriteLine("+++++ Private Key +++++\n\n");
-
         }
 
         private static int BerechneZufallszahl(int phiN)
@@ -61,11 +63,20 @@ namespace md5
             int rtrn = 0;
             bool checker = false;
 
-            while(checker == false)
+            //for (int i = 2; i < phiN; i++)
+            //{
+            //    if (Euklid(phiN, i)==true)
+            //    {
+            //        rtrn = i;
+            //        break;
+            //    }
+            //}
+
+            while (checker == false)
             {
                 int zufallszahl = r.Next(2, (phiN - 1));
                 //Console.WriteLine("zufallszahl: " + zufallszahl);
-                if (Euklid(phiN,zufallszahl)==true)
+                if (Euklid(phiN, zufallszahl) == true)
                 {
                     //Console.WriteLine("teilerfremde Zufallszahl ist: " + zufallszahl);
                     rtrn = zufallszahl;
@@ -176,7 +187,7 @@ namespace md5
 
                 //TODO Code 2 Primzahlen
                 prim1 = Prime(n);
-                prim2 = Prime(prim1 - 1);
+                prim2 = Prime(prim1 + 1);
 
                 int[] primArr = new int[2];
                 primArr[0] = prim1;
@@ -230,31 +241,51 @@ namespace md5
                 {
                     asciistring += b.ToString();
                 }
-                Console.WriteLine("Ascii als double: "+asciistring);
+                //Console.WriteLine("Ascii als double: "+asciistring);
                 return Convert.ToDouble(asciistring);
             }
 
         public static void Encrypt(string message, string _e, string _N)
         {
-            double e = Convert.ToDouble(_e);
-            double N = Convert.ToDouble(_N);
-            double basis = InAsciiUmwandeln(message);
-            Console.WriteLine("Sectret: " + basis + "^" + e + " mod " + N);
-            double faktor1 = Math.Pow(basis, e);
-            double secret = (faktor1 % N);
-            Console.WriteLine("Sectret berechnet: " + secret);
+            string mess = InAsciiUmwandeln(message).ToString();
+            Console.WriteLine("Klartext: " + mess);
+            var msg = BigInteger.Parse(mess);
+            var NN = BigInteger.Parse(_N);
+            int eee = Convert.ToInt32(_e);
+            var erg2 = BigInteger.ModPow(msg, eee, NN);
+            Console.WriteLine("Geheimtext: " + erg2);
+
+
+            //double e = Convert.ToDouble(_e);
+            //double N = Convert.ToDouble(_N);
+            //double basis = InAsciiUmwandeln(message);
+            //Console.WriteLine("Sectret: " + basis + "^" + e + " mod " + N);
+            //double faktor1 = Math.Pow(basis, e);
+            ////Console.WriteLine("message ^ e: " + faktor1);
+            //double secret = (faktor1 % N);
+            //Console.WriteLine("Sectret berechnet: " + secret);
         }
 
 
         public static void Decrypt(string _sec, string _d, string _N)
-            {
-            double e = Convert.ToDouble(_d);
-            double N = Convert.ToDouble(_N);
-            double basis = Convert.ToDouble(_sec);
-            Console.WriteLine("Klartext: " + basis + "^" + e + " mod " + N);
-            double faktor1 = Math.Pow(basis, e);
-            double secret = faktor1 % N;
-            Console.WriteLine("Klartext berechnet: " + secret);
+           {
+            //string mess = InAsciiUmwandeln(_sec).ToString();
+            var secr = BigInteger.Parse(_sec);
+            var NN = BigInteger.Parse(_N);
+            int dd = Convert.ToInt32(_d);
+            Console.WriteLine("{0} ^ {1} % {2}", secr, dd, NN);
+            var erg2 = BigInteger.ModPow(secr, dd, NN);
+            Console.WriteLine("Klartext: " + erg2);
+
+
+
+            //double e = Convert.ToDouble(_d);
+            //double N = Convert.ToDouble(_N);
+            //double basis = Convert.ToDouble(_sec);
+            //Console.WriteLine("Klartext: " + basis + "^" + e + " mod " + N);
+            //double faktor1 = Math.Pow(basis, e);
+            //double secret = faktor1 % N;
+            //Console.WriteLine("Klartext berechnet: " + secret);
             }
         }
     }

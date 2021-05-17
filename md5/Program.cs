@@ -69,7 +69,7 @@ namespace md5
                         int key2 = Convert.ToInt32(Console.ReadLine());
                         bool prüf2 = Caesar.KeyPrüfen(key2);
                         if (prüf2)
-                            Caesar.Verschlüsseln(geheim, key2);
+                            Caesar.Entschlüsseln(geheim, key2);
                         else
                             throw new Exception("Schlüssellänge Falsch!");
                         break;
