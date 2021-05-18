@@ -13,7 +13,7 @@ namespace md5
             {
                 try
                 {
-                    int auswahl = InOut.ShowMenu("Symmetrisch Verschlüsseln", "Asymmetrisch Verschlüsseln", "Hash berechnen", "Signieren");
+                    int auswahl = InOut.ShowMenu("Symmetrisch Verschlüsseln", "Asymmetrisch Verschlüsseln", "Hash berechnen", "Signieren", "Schlüssel erzeugen");
                     switch (auswahl)
                     {
                         case 1:
@@ -27,7 +27,9 @@ namespace md5
                             break;
                         case 4:
                             MenueSignieren();
-                            Console.WriteLine("Noch nicht definiert");
+                            break;
+                        case 5:
+                            RSA.Keygen();
                             break;
                         default:
                             break;
@@ -40,8 +42,6 @@ namespace md5
             }
             
         }
-
-
 
         private static void MenueSymmetrisch()
         {
@@ -93,13 +93,11 @@ namespace md5
             int a = 1;
             while (a == 1)
             {
-                int choice2 = InOut.ShowMenu("Schlüssel generieren", "Verschlüsseln", "Entschlüsseln", "Zurück");
+                int choice2 = InOut.ShowMenu("Verschlüsseln", "Entschlüsseln", "Zurück");
                 switch (choice2)
                 {
+                    
                     case 1:
-                        RSA.Keygen();
-                        break;
-                    case 2:
                         Console.Write("Klartext: ");
                         string m = Console.ReadLine();
                         Console.Write("e eingeben: ");
@@ -108,7 +106,7 @@ namespace md5
                         string N = Console.ReadLine();
                         RSA.Encrypt(m, e, N);
                         break;
-                    case 3:
+                    case 2:
                         Console.Write("Geheimtext eingeben: ");
                         string secret = Console.ReadLine();
                         Console.Write("d eingeben: ");
@@ -117,7 +115,7 @@ namespace md5
                         string N2 = Console.ReadLine();
                         RSA.Decrypt(secret, d, N2);
                         break;
-                    case 4:
+                    case 3:
                         a = 0;
                         break;
                     default:
@@ -150,15 +148,29 @@ namespace md5
                 }
             }
         }
-
-
-
         private static void MenueSignieren()
         {
-            while (true)
+            int a = 1;
+            while (a == 1)
             {
-                throw new NotImplementedException();
-            }        
+                int choice = InOut.ShowMenu("Signieren", "Verifizieren", "Zurück");
+                switch (choice)
+                {
+                    case 1:
+                        RSASignieren.Signieren();
+                        break;
+                    case 2:
+                        RSASignieren.Verifizieren();
+                        break;
+                    case 3:
+                        a = 0;
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
+
+
     }
 }

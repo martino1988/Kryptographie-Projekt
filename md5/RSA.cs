@@ -213,7 +213,7 @@ namespace md5
 
                 while (peter == false)
                 {
-                    n = rand.Next(2, 990);
+                    n = rand.Next(900, 9990);
                     m = n / 2;
 
                     for (i = 2; i <= m; i++)
@@ -242,7 +242,7 @@ namespace md5
 
 
 
-        private static double InAsciiUmwandeln(string plain)
+        public static double InAsciiUmwandeln(string plain)
             {
                 ASCIIEncoding ascii = new ASCIIEncoding();
 
@@ -273,8 +273,10 @@ namespace md5
                 var ee = BigInteger.Parse(_e);
                 double N = Convert.ToDouble(_N);
                 var NN = BigInteger.Parse(_N);
+
             //TEST
 
+            //Methode 1: als mehrere Nummernblöcke darstellen
             foreach (char item in letters)
             {
                 double x = InAsciiUmwandeln(item.ToString());
@@ -287,11 +289,14 @@ namespace md5
                 //Console.WriteLine("PlaintextArray Stelle " + z + ": " + plaintextArray[z]);
                 z++;
             }
+
             Console.WriteLine("Geheimtext: ");
-            foreach(string item in ciphertextArray)
+            foreach (string item in ciphertextArray)
             {
                 Console.Write(item + " ");
+                //Console.Write(item);
             }
+            Console.WriteLine();
             //Console.WriteLine("Ciphertext Array: " + ciphertextArray[0] + " " + ciphertextArray[1] + " " + ciphertextArray[2]);
             
 
@@ -340,6 +345,40 @@ namespace md5
             var NN = BigInteger.Parse(_N);
             int dd = Convert.ToInt32(_d);
 
+            ////Methode 2: Tectblöcke trennen
+            //Console.WriteLine("METHODE 2");
+            //char[] cipherchars = _sec.ToCharArray();
+            //List<string> ciphertexte = new List<string>(); 
+            //for (int i = 0; i < cipherchars.Length-7; i+=7)
+            //{
+            //    string cipher = "";
+            //    cipher += cipherchars[i].ToString();
+            //    cipher += cipherchars[i+1].ToString();
+            //    cipher += cipherchars[i+2].ToString();
+            //    cipher += cipherchars[i+3].ToString();
+            //    cipher += cipherchars[i+4].ToString();
+            //    cipher += cipherchars[i+5].ToString();
+            //    cipher += cipherchars[i+6].ToString();
+            //    ciphertexte.Add(cipher);
+            //    cipher = "";
+            //}
+            //List<string> plainTextList = new List<string>();
+            //foreach (string a in ciphertexte)
+            //{
+            //    var secr = BigInteger.Parse(a);
+            //    var result = BigInteger.ModPow(secr, dd, NN);
+            //    plainTextList.Add(result.ToString());
+            //}
+            //foreach (string item in plainTextList)
+            //{
+            //    Console.Write(item + " ");
+            //}
+            //ENDE METHODE 2
+
+
+
+            //Methode 1: Mehrere Blöcke entschlüsseln
+            Console.WriteLine("METHODE 1");
             string[] cipherTextArray = _sec.Split(" ");
             string[] plainTextArray = new string[cipherTextArray.Length];
             string[] plainText = new string[cipherTextArray.Length];

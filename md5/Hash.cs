@@ -24,6 +24,7 @@ namespace md5
 
             //TODO Blöcke und IV verrechnen
             string hash1 = HashBerechnen(blockListe, iv);
+            Console.WriteLine("Hash decimal: " + hash1);
 
             //TODO in hexa umwandeln
             string hash2 = InHexaUmwandeln(hash1);
