@@ -9,12 +9,12 @@ namespace md5
     {
         public static void Keygen()
         {
-            Console.WriteLine("Eine hohe Zahl (Integer) eingeben");
-            int n = Convert.ToInt32(Console.ReadLine());
+            //Console.WriteLine("Eine hohe Zahl (Integer) eingeben");
+            //int n = Convert.ToInt32(Console.ReadLine());
 
             //2 Primzahlen ermitteln
             int[] primeArray = new int[2];
-            primeArray = Get2Primes(n);
+            primeArray = Get2Primes();
             foreach (var a in primeArray)
             {
                 Console.WriteLine("Primzahl: " + a);
@@ -180,58 +180,69 @@ namespace md5
             {
                 return (prim1 - 1) * (prim2 - 1);
             }
-            internal static int[] Get2Primes(int n)
+            internal static int[] Get2Primes()
             {
                 int prim1 = 7;
                 int prim2 = 23;
-
+                bool check = false;
                 //TODO Code 2 Primzahlen
-                //prim1 = Prime(n);
-                //prim2 = Prime(prim1 + 1);
-                
-            
+                prim1 = Prime();
+                while (check == false)
+                {
+                    prim2 = Prime();
+                    if (prim2 >= prim1)
+                    {
+                        check = true;
+                    }
 
-                int[] primArr = new int[2];
+                }
+
+            int[] primArr = new int[2];
                 primArr[0] = prim1;
                 primArr[1] = prim2;
 
                 return primArr;
             }
 
-            internal static int Prime(int z)
+            internal static int Prime()
             {
-                bool peter = false;
-                bool check = false;
+            var rand = new Random();
+            int n = 0, i, m = 0, flag = 0;
+            bool peter = false;
+
 
                 while (peter == false)
                 {
-                    check = false;
-                    for (int i = 2; i < z; i++)
+                    n = rand.Next(2, 990);
+                    m = n / 2;
+
+                    for (i = 2; i <= m; i++)
                     {
-                        if (z % i == 0)
+                        flag = 0;
+                        if (n % i == 0)
                         {
-                            check = true;
+                            flag = 1;
+
+
                             break;
                         }
-                        //do nothing
                     }
-                    if (check == true)
-                    {
-                        z--;
-                    }
-                    else
+                    if (flag == 0)
                     {
                         peter = true;
-                        return z;
+
                     }
 
-                } //while peter
-                return z;
+
+                }
+                return n;
+
             }
 
 
-           
-            private static double InAsciiUmwandeln(string plain)
+
+
+        private static double InAsciiUmwandeln(string plain)
             {
                 ASCIIEncoding ascii = new ASCIIEncoding();
 
