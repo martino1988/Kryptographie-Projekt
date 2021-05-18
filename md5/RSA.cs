@@ -9,12 +9,12 @@ namespace md5
     {
         public static void Keygen()
         {
-            //Console.WriteLine("Eine hohe Zahl (Integer) eingeben");
-            //int n = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Eine hohe Zahl (Integer) eingeben");
+            int n = Convert.ToInt32(Console.ReadLine());
 
             //2 Primzahlen ermitteln
             int[] primeArray = new int[2];
-            primeArray = Get2Primes();
+            primeArray = Get2Primes(n);
             foreach (var a in primeArray)
             {
                 Console.WriteLine("Primzahl: " + a);
@@ -49,12 +49,12 @@ namespace md5
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("e: {0}\nN: {1}", e, N);
             Console.ResetColor();
-            //Console.WriteLine("+++++ Public Key +++++\n");
-            Console.WriteLine("+++++ Private Key +++++");
+            Console.WriteLine("+++++ Public Key +++++\n");
+            Console.WriteLine("\n+++++ Private Key +++++");
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("d: {0}\nN: {1}\n", d, N);
+            Console.WriteLine("d: {0}\nN: {1}", d, N);
             Console.ResetColor();
-            //Console.WriteLine("+++++ Private Key +++++\n\n");
+            Console.WriteLine("+++++ Private Key +++++\n\n");
         }
 
         private static int BerechneZufallszahl(int phiN)
@@ -180,23 +180,14 @@ namespace md5
             {
                 return (prim1 - 1) * (prim2 - 1);
             }
-            internal static int[] Get2Primes()
+            internal static int[] Get2Primes(int n)
             {
                 int prim1 = 7;
                 int prim2 = 23;
-                bool check = false;
-                //TODO Code 2 Primzahlen
-                prim1 = Prime();
-                while (check == false)
-                    {
-                        prim2 = Prime();
-                        if (prim2 >= prim1)
-                        {
-                            check = true;
-                        }
 
-                    }
-                
+                //TODO Code 2 Primzahlen
+                //prim1 = Prime(n);
+                //prim2 = Prime(prim1 + 1);
                 
             
 
@@ -207,70 +198,36 @@ namespace md5
                 return primArr;
             }
 
-            internal static int Prime()
+            internal static int Prime(int z)
             {
-
-                var rand = new Random();
-                int n=0, i, m = 0, flag = 0;
                 bool peter = false;
-            
-                
-                while(peter == false)
+                bool check = false;
+
+                while (peter == false)
                 {
-                    n = rand.Next(2, 990);
-                    m = n / 2;
-                    
-                    for (i = 2; i <= m; i++)
+                    check = false;
+                    for (int i = 2; i < z; i++)
                     {
-                        flag = 0;
-                        if (n % i == 0)
+                        if (z % i == 0)
                         {
-                            flag = 1;
-                            
-                            
+                            check = true;
                             break;
                         }
+                        //do nothing
                     }
-                if (flag == 0 )
+                    if (check == true)
                     {
-                    peter = true;
-                    
+                        z--;
                     }
-                    
-                        
-                }
-                return n;
-                
+                    else
+                    {
+                        peter = true;
+                        return z;
+                    }
+
+                } //while peter
+                return z;
             }
-
-        /*bool peter = false;
-            bool check = false;
-
-            while (peter == false)
-            {
-                check = false;
-                for (int i = 2; i < z; i++)
-                {
-                    if (z % i == 0)
-                    {
-                        check = true;
-                        break;
-                    }
-                    //do nothing
-                }
-                if (check == true)
-                {
-                    z--;
-                }
-                else
-                {
-                    peter = true;
-                    return z;
-                }
-
-            } //while peter
-            return z;*/
-    
 
 
            
