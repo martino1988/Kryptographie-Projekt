@@ -9,52 +9,36 @@ namespace md5
     {
         public static void Keygen()
         {
-            //Console.WriteLine("Eine hohe Zahl (Integer) eingeben");
-            //int n = Convert.ToInt32(Console.ReadLine());
-
             //2 Primzahlen ermitteln
             int[] primeArray = new int[2];
             primeArray = Get2Primes();
-            foreach (var a in primeArray)
-            {
-                Console.WriteLine("Primzahl: " + a);
-            }
 
             //N berechnen = p x q
             int N = NBerechnen(primeArray[0], primeArray[1]);
-            Console.WriteLine("N: " + N);
 
             //Phi berechnen
             int phiN = PhiVonN(primeArray[0], primeArray[1]);
-            Console.WriteLine("Phi(n): " + phiN);
 
             //b berechnen ggt(b, phi(n))
             int zz = BerechneZufallszahl(phiN);
-            Console.WriteLine("Teilerfremde Zufallszahl: " + zz);
 
             //inverses b^-1 berechnen
             int[] erg = ErweiterterEuklid(phiN, zz);
 
-            //for (int i = 0; i < erg.Length; i++)
-            //{
-            //    Console.WriteLine(i + " " + erg[i]);
-            //}
-            Console.WriteLine("Inverses=" + erg[2]);
             int d = zz;
             int e = Modulo(erg[2], phiN);
 
-            //Console.WriteLine("d=" + d + " e=" + e);
 
-            Console.WriteLine("\n\n+++++ Public Key +++++");
+            Console.WriteLine("\n+++++ Public Key +++++");
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("e: {0}\nN: {1}", e, N);
+            Console.WriteLine("{0}:{1}", e, N);
             Console.ResetColor();
-            Console.WriteLine("+++++ Public Key +++++\n");
+            Console.WriteLine("+++++ Public Key +++++");
             Console.WriteLine("\n+++++ Private Key +++++");
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("d: {0}\nN: {1}", d, N);
+            Console.WriteLine("{0}:{1}", d, N);
             Console.ResetColor();
-            Console.WriteLine("+++++ Private Key +++++\n\n");
+            Console.WriteLine("+++++ Private Key +++++\n");
         }
 
         private static int BerechneZufallszahl(int phiN)
@@ -290,7 +274,7 @@ namespace md5
                 z++;
             }
 
-            Console.WriteLine("Geheimtext: ");
+            //Console.WriteLine("Geheimtext: ");
             foreach (string item in ciphertextArray)
             {
                 Console.Write(item + " ");
@@ -378,7 +362,7 @@ namespace md5
 
 
             //Methode 1: Mehrere Blöcke entschlüsseln
-            Console.WriteLine("METHODE 1");
+            //Console.WriteLine("METHODE 1");
             string[] cipherTextArray = _sec.Split(" ");
             string[] plainTextArray = new string[cipherTextArray.Length];
             string[] plainText = new string[cipherTextArray.Length];
@@ -394,10 +378,10 @@ namespace md5
                 z++;
             }
             z = 0;
-            Console.WriteLine("Klartext (ASCII): ");
+            //Console.WriteLine("Klartext (ASCII): ");
             foreach (string item in plainTextArray)
             {
-                Console.Write(item + " ");
+                //Console.Write(item + " ");
                 int unicode = Convert.ToInt32(item);
                 char character = (char)unicode;
                 string text = character.ToString();
@@ -410,6 +394,7 @@ namespace md5
             {
                 Console.Write(item);
             }
+            Console.WriteLine();
 
             /*var secr = BigInteger.Parse(_sec);
             var NN = BigInteger.Parse(_N);

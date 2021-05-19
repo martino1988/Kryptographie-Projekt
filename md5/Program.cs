@@ -8,12 +8,13 @@ namespace md5
     {
         static void Main(string[] args)
         {
+            int a = 1;
 
-            while (true)
+            while (a==1)
             {
                 try
                 {
-                    int auswahl = InOut.ShowMenu("Symmetrisch Verschlüsseln", "Asymmetrisch Verschlüsseln", "Hash berechnen", "Signieren", "Schlüssel erzeugen");
+                    int auswahl = InOut.ShowMenu("Symmetrisch Verschlüsseln", "Asymmetrisch Verschlüsseln", "Hash berechnen", "Signieren", "Schlüssel erzeugen", "Beenden");
                     switch (auswahl)
                     {
                         case 1:
@@ -30,6 +31,9 @@ namespace md5
                             break;
                         case 5:
                             RSA.Keygen();
+                            break;
+                        case 6:
+                            a = 0;
                             break;
                         default:
                             break;
@@ -100,19 +104,21 @@ namespace md5
                     case 1:
                         Console.Write("Klartext: ");
                         string m = Console.ReadLine();
-                        Console.Write("e eingeben: ");
-                        string e = Console.ReadLine();
-                        Console.Write("N eingeben: ");
-                        string N = Console.ReadLine();
+                        Console.Write("Public Key eingeben: ");
+                        string pbk= Console.ReadLine();
+                        string[] keypaarpublic = pbk.Split(':');
+                        string e = keypaarpublic[0];
+                        string N = keypaarpublic[1];
                         RSA.Encrypt(m, e, N);
                         break;
                     case 2:
                         Console.Write("Geheimtext eingeben: ");
                         string secret = Console.ReadLine();
-                        Console.Write("d eingeben: ");
-                        string d = Console.ReadLine();
-                        Console.Write("N eingeben: ");
-                        string N2 = Console.ReadLine();
+                        Console.Write("Private Key eingeben: ");
+                        string pvk = Console.ReadLine();
+                        string[] keypaarprivate = pvk.Split(':');
+                        string d = keypaarprivate[0];
+                        string N2 = keypaarprivate[1]; ;
                         RSA.Decrypt(secret, d, N2);
                         break;
                     case 3:
@@ -153,16 +159,22 @@ namespace md5
             int a = 1;
             while (a == 1)
             {
-                int choice = InOut.ShowMenu("Signieren", "Verifizieren", "Zurück");
+                int choice = InOut.ShowMenu("Keys erzeugen", "Signieren", "Verifizieren", "Zurück");
                 switch (choice)
                 {
                     case 1:
-                        RSASignieren.Signieren();
+                        Console.WriteLine("Schlüsselpaar Sender (Alice):");
+                        RSA.Keygen();
+                        Console.WriteLine("Schlüsselpaar Empfänger (Bob):");
+                        RSA.Keygen();
                         break;
                     case 2:
-                        RSASignieren.Verifizieren();
+                        RSASignieren.Signieren();
                         break;
                     case 3:
+                        RSASignieren.Verifizieren();
+                        break;
+                    case 4:
                         a = 0;
                         break;
                     default:
