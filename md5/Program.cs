@@ -14,7 +14,7 @@ namespace md5
             {
                 try
                 {
-                    int auswahl = InOut.ShowMenu("Symmetrisch Verschlüsseln", "Asymmetrisch Verschlüsseln", "Hash berechnen", "Signieren", "Schlüssel erzeugen", "Beenden");
+                    int auswahl = InOut.ShowMenu("Symmetrisch Verschlüsseln", "Asymmetrisch Verschlüsseln", "Hash berechnen", "Signieren", "Beenden");
                     switch (auswahl)
                     {
                         case 1:
@@ -30,9 +30,6 @@ namespace md5
                             MenueSignieren();
                             break;
                         case 5:
-                            RSA.Keygen();
-                            break;
-                        case 6:
                             a = 0;
                             break;
                         default:
@@ -97,11 +94,13 @@ namespace md5
             int a = 1;
             while (a == 1)
             {
-                int choice2 = InOut.ShowMenu("Verschlüsseln", "Entschlüsseln", "Zurück");
+                int choice2 = InOut.ShowMenu("Schlüssel erzeugen", "Verschlüsseln", "Entschlüsseln", "Zurück");
                 switch (choice2)
                 {
-                    
                     case 1:
+                        RSA.Keygen();
+                        break;
+                    case 2:
                         Console.Write("Klartext: ");
                         string m = Console.ReadLine();
                         Console.Write("Public Key eingeben: ");
@@ -111,7 +110,7 @@ namespace md5
                         string N = keypaarpublic[1];
                         RSA.Encrypt(m, e, N);
                         break;
-                    case 2:
+                    case 3:
                         Console.Write("Geheimtext eingeben: ");
                         string secret = Console.ReadLine();
                         Console.Write("Private Key eingeben: ");
@@ -121,7 +120,7 @@ namespace md5
                         string N2 = keypaarprivate[1]; ;
                         RSA.Decrypt(secret, d, N2);
                         break;
-                    case 3:
+                    case 4:
                         a = 0;
                         break;
                     default:

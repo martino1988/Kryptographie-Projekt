@@ -24,7 +24,7 @@ namespace md5
             string dAlice = keyPaarAlicePrivate[0];
             string nAlice = keyPaarAlicePrivate[1];
 
-            Console.WriteLine("+++ Verschlüsselte Nachricht +++");
+            Console.WriteLine("\n+++ Verschlüsselte Nachricht +++");
             RSA.Encrypt(message, eBob, nBob);
             Console.WriteLine("\n+++ Signatur +++");
             RSA.Encrypt(message, dAlice, nAlice);
@@ -52,10 +52,13 @@ namespace md5
             string eAlice = keyPaarAlicePublic[0];
             string nAlice = keyPaarAlicePublic[1];
 
-
-            Console.WriteLine("Entschlüsseln");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("\nEntschlüsseln");
+            Console.ResetColor();
             RSA.Decrypt(cipher, dBob, nBob);
-            Console.WriteLine("Signatur verifizieren");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("\nSignatur verifizieren");
+            Console.ResetColor();
             RSA.Decrypt(signature, eAlice, nAlice);
         }
     }

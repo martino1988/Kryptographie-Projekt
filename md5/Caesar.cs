@@ -126,13 +126,13 @@ namespace md5
         // TEXT ausgeben
         private static void TextDrucken(char[] chararray, int _key)
         {
-            Console.WriteLine("Verwendeter Key: " + _key + "\n");
+            Console.WriteLine("Verwendeter Key: " + _key);
             Console.Write("Text:\t");
             foreach (char a in chararray)
             {
                 Console.Write(a);
             }
-            Console.WriteLine("\n\n");
+            Console.WriteLine("\n");
         }
     }
 }
